@@ -4,9 +4,9 @@ class conn
 {
 	function connect($mysql)
  	{
-		$username="realpromiseuser";
-		$password="realpromise";
-		$database="realpromise";
+		$username="marssauser";
+		$password="marssa";
+		$database="marssa";
 		$hostname="misenas";
 
 //  		$username="root";
@@ -23,9 +23,6 @@ class conn
 		
 		//close connection
 		//mysql_close();
-
-
-
 
 	}
 }
