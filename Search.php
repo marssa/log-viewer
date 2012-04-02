@@ -1,6 +1,6 @@
 <?php session_start();?>
 <?php include ("includes/dataclass.php");?>
-
+<?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
 <?php
 if ( isset($_GET['sortvalue']) )
 {
@@ -11,10 +11,25 @@ else
 	$_SESSION['sortvalue']='le.event_id';
 }
 
-if (isset($_POST['Submit1'])) {
-	$selected_radio = $_POST['option'];
-	$_SESSION['sel'] =  $selected_radio;
+if (isset($_POST['button'])) {
+	//$selected_radio = $_POST['optionr'];
+	$optionr = $_POST['optionr'];
+
 	//print $_SESSION['sel'];
+
+	$to = $_POST['txtto'];
+	$_SESSION['to'] = $to;
+	$from = $_POST['txtfrom'];
+	$_SESSION['from'] = $from;
+	//$class =
+	$_SESSION['class'] =$_POST['txtcallerclass'];
+	$markertype = $_POST['txtmarkertype'];
+	$_SESSION['markertype'] = $markertype;
+	$levelstring = $_POST['txtlevelstring'];
+	$_SESSION['levelstring'] = $levelstring;
+	$loggername = $_POST['txloggername'];
+	$_SESSION['loggername'] = $loggername;
+
 }
 
 
@@ -81,6 +96,7 @@ th {
 		<form action="Search.php" method="post" name="Search" id="Search">
 			
 			
+
 		<?php echo "</br></br><b><center>Logging Event Information</center></b><br><br>"; ?>
 
 			<table>
@@ -89,35 +105,53 @@ th {
 					<?php echo 'Search '?></br>
 					</td>
 					<td></td>
-					
 				</tr>
-
 				<tr>
-					<td><Input type='Radio' Name="optionr" value="t3" /> All 3 tables</Input>
+					
+					
+					
+				<?php echo "optionr = ".$_SESSION['optionr'];?>
+					<br>
+					
+					
+					
+					
+				<?php echo "class = ". $_SESSION['class'];	?><br>
+				<?php echo "markertype = ". $_SESSION['markertype'];?><br>
+				<?php echo "levelstring = ". $_SESSION['levelstring'];?><br>
+				<?php echo "loggername = ". $_SESSION['loggername'];?><br>
+				
+				
+				<?php echo $caller; ?>
+					<td><Input type='Radio' Name="optionr" value="t3"
+					<?= (isset($optionr) && $optionr == "t3")? 'checked' : '' ?> /> All
+						3 tables</Input>
 					</td>
 					<td></td>
-					
+
 				</tr>
 
 				<tr>
-					<td><Input type='Radio' Name="optionr" value="t2" /> Event and it's
-						property</Input></td>
+					<td><Input type='Radio' Name="optionr" value="t2"
+					<?= (isset($optionr) && $optionr == "t2")? 'checked' : '' ?> />
+						Event and it's property</Input></td>
 					<td></td>
-					
+
 				</tr>
 
 				<tr>
-					<td><Input type='Radio' Name="optionr" value="t1" /> Event and it's
-						Exception</td>
+					<td><Input type='Radio' Name="optionr" value="t1"
+					<?= (isset($optionr) && $optionr == "t1")? 'checked' : '' ?> />
+						Event and it's Exception</td>
 					<td></td>
-					
+
 				</tr>
 				<tr>
 					<td><label for="txtfrom">From</label>
 					</td>
-					<td><input type="text" id="txtfrom" name="txtfrom" />
-					<label for="txtto">To</label>
-					<input type="text" id="txtto" name="txtto" /> </br>
+					<td><input type="text" id="txtfrom" name="txtfrom"
+					<?= (isset($from) )? 'txtfrom' : '$from' ?> /> <label for="txtto">To</label>
+						<input type="text" id="txtto" name="txtto" /> </br>
 					</td>
 
 				</tr>
@@ -133,20 +167,35 @@ th {
 
 					?>
 						<div>
-							<select name="txtcallerclass">	                        	
-							<?php
-							print ("<option>Select</option>");
-							while ($row=mysql_fetch_row($allcallerclasses))
+							<select name="txtcallerclass">                     	
+							<?php if($_POST['submit'] == true){?>
+								<option value="<?php echo $_POST['txtcallerclass']; ?>" selected="selected">
+																			
+									<?php echo $_POST['txtcallerclass']; ?></option>
+								
+								<?php } else { ?>
+								<option>Select</option>
+								<?php } ?>
+																
+							<?php while ($row=mysql_fetch_row ($allcallerclasses))
 							{
-
 								$Name = $row[0];
-								print ("<option value='$Name'>$Name</option>\n");
+								print ("<option value='$Name'> $Name</option>\n");
+								
+								$caller = $Name;
+								echo $txtcallerclass;
 							}
 							?>
 							</select>
-						</div> <br />
+							<script type="text/javascript">
+							<?php if (isset($class)){ ?> 
+							document.getElementById('<?php echo $class ?>').value == ( <?php echo $class ?>)
+							<?php } ?>
+							</script>
+
+						</div> </br>
 					</td>
-					
+
 				</tr>
 				<tr>
 					<td><label>Marker Type</label></td>
@@ -158,18 +207,18 @@ th {
 							print ("<option>Select</option>");
 							while ($row=mysql_fetch_row($allmarkertypes))
 							{
-
 								$Name = $row[0];
 								print ("<option value='$Name'>$Name</option>\n");
 							}
 							?>
 							</select>
+							<script type="text/javascript">
+							 <? if (isset($txtmarkertype)) document.getElementById('$txtmarkertype').value == (print $txtmarkertype); ?>
+							</script>
 						</div> <br />
 					</td>
-					
 				</tr>
-				
-				
+
 				<tr>
 					<td><label>Level String</label></td>
 					<td>
@@ -188,9 +237,9 @@ th {
 							</select>
 						</div> <br />
 					</td>
-					
+
 				</tr>
-				
+
 				<tr>
 					<td><label>Logger Name</label></td>
 					<td>
@@ -209,19 +258,23 @@ th {
 							</select>
 						</div> <br />
 					</td>
-					
+
 				</tr>
-				
-				
+
+
 				<tr>
 					<td></td>
 					<td><input type="submit" name="button" value="Go!"></input>
 					</td>
-					
+
 				</tr>
 
 			</table>
 		</form>
+		
+		
+		
+		
 		
 		<?php
 
@@ -293,26 +346,17 @@ th {
 					<th><b>Trace Line </a>
 					
 					</th>
-				</tr>				
-				
-
-				
+				</tr>			
+								
 				<!-- <input name="btnsearch" type="button" value="Go" >-->
 	
 				<?php		
 				
 			 if ($_POST)
 			{
-				$to = $_POST['txtto'];
-				$from = $_POST['txtfrom'];
-				$class = $_POST['txtcallerclass'];
-				$markertype = $_POST['txtmarkertype'];
-				$levelstring = $_POST['txtlevelstring'];
-				$loggername = $_POST['txloggername'];
 				
 				
- 				
-				
+ 								
 				if($to == null && $from == NULL && $class == "Select")
 				{
 					if (isset($_POST["optionr"])){

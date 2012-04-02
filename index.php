@@ -53,8 +53,6 @@ th {
 <body>
 
 	<div id="lee">
-		
-			
 			
 		<?php
 
