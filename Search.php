@@ -1,6 +1,8 @@
 <?php session_start();?>
-<?php include ("includes/dataclass.php");?>
 <?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
+<?php include ("includes/dataclass.php");?>
+<?php include ("includes/data.php");?>
+
 <?php
 if ( isset($_GET['sortvalue']) )
 {
@@ -12,10 +14,8 @@ else
 }
 
 if (isset($_POST['button'])) {
-	//$selected_radio = $_POST['optionr'];
-	$optionr = $_POST['optionr'];
 
-	//print $_SESSION['sel'];
+	$optionr = $_POST['optionr'];
 
 	$to = $_POST['txtto'];
 	$_SESSION['to'] = $to;
@@ -29,71 +29,22 @@ if (isset($_POST['button'])) {
 	$_SESSION['levelstring'] = $levelstring;
 	$loggername = $_POST['txloggername'];
 	$_SESSION['loggername'] = $loggername;
-
 }
 
-
 ?>
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<script language="javascript" type="text/javascript"
-	src="datetimepicker.js"></script>
-<style type="text/css">
-h1 {
-	color: #00ff00;
-}
-
-td {
-	font-family: Arial, Verdana;
-	font-size: 15px;
-	background: #F9F8FB;
-	color: #716E6E;
-	font-weight: normal;
-	/* text-align: center; */
-	vertical-align: middle;
-}
-
-th {
-	background: #CFDBF3;
-	font-weight: bold;
-	color: #445276;
-	font-size: 17px;
-}
-</style>
-
-
 <title>Home</title>
 <link type="text/css" href="css/redmond/jquery-ui-1.8.17.custom.css"
 	rel="stylesheet" />
-<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
-
-<script>
-	$(function() {
-		var dates = $( "#txtfrom, #txtto" ).datepicker({
-			defaultDate: "",
-			changeMonth: true,
-			numberOfMonths: 1,
-			onSelect: function( selectedDate ) {
-				var option = this.id == "txtfrom" ? "minDate" : "maxDate",
-					instance = $( this ).data( "datepicker" ),
-					date = $.datepicker.parseDate(
-						instance.settings.dateFormat ||
-						$.datepicker._defaults.dateFormat,
-						selectedDate, instance.settings );
-				dates.not( this ).datepicker( "option", option, date );
-			}
-		});
-	});
-	</script>
-
 </head>
 <body>
 	<div id="lee">
 		<form action="Search.php" method="post" name="Search" id="Search">
+			
+			
 			
 			
 
@@ -110,12 +61,7 @@ th {
 					
 					
 					
-				<?php echo "optionr = ".$_SESSION['optionr'];?>
-					<br>
-					
-					
-					
-					
+				<?php echo "optionr = ".$_SESSION['optionr'];?><br>					
 				<?php echo "class = ". $_SESSION['class'];	?><br>
 				<?php echo "markertype = ". $_SESSION['markertype'];?><br>
 				<?php echo "levelstring = ". $_SESSION['levelstring'];?><br>
@@ -169,11 +115,12 @@ th {
 						<div>
 							<select name="txtcallerclass">                     	
 							<?php if($_POST['submit'] == true){?>
-								<option value="<?php echo $_POST['txtcallerclass']; ?>" selected="selected">
-																			
+								<option value="<?php echo $_POST['txtcallerclass']; ?>"
+									selected="selected">				
+
 									<?php echo $_POST['txtcallerclass']; ?></option>
-								
-								<?php } else { ?>
+
+									<?php } else { ?>
 								<option>Select</option>
 								<?php } ?>
 																
@@ -192,10 +139,8 @@ th {
 							document.getElementById('<?php echo $class ?>').value == ( <?php echo $class ?>)
 							<?php } ?>
 							</script>
-
 						</div> </br>
 					</td>
-
 				</tr>
 				<tr>
 					<td><label>Marker Type</label></td>
@@ -229,7 +174,6 @@ th {
 							print ("<option>Select</option>");
 							while ($row=mysql_fetch_row($alllevelstrings))
 							{
-
 								$Name = $row[0];
 								print ("<option value='$Name'>$Name</option>\n");
 							}
@@ -237,9 +181,7 @@ th {
 							</select>
 						</div> <br />
 					</td>
-
 				</tr>
-
 				<tr>
 					<td><label>Logger Name</label></td>
 					<td>
@@ -258,10 +200,7 @@ th {
 							</select>
 						</div> <br />
 					</td>
-
 				</tr>
-
-
 				<tr>
 					<td></td>
 					<td><input type="submit" name="button" value="Go!"></input>
@@ -271,11 +210,6 @@ th {
 
 			</table>
 		</form>
-		
-		
-		
-		
-		
 		<?php
 
 		
@@ -466,8 +400,6 @@ th {
  										  if(( $_POST["optionr"] == "t2"))echo "<B>"."Not applicable";											  
  										  else echo  "{$row['trace_line']}" ;} 
 								?></td>
-							 	
-										
 								
 							</tr>
 						
@@ -478,21 +410,12 @@ th {
 	<?php }?>
 	
 			</table>
-			
-			
-			
-				
 			<?php 		
 				$i++;}
-		
 	}
 	?>
 </form>
 	</div>
-
-
-
-
 </body>
 
 </html>

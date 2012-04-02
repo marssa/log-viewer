@@ -45,7 +45,7 @@ function GetValuesLoggingEvent()
 {
 
 	$result = new conn();
-	$query =  "SELECT timestmp,formatted_message,logger_name,level_string,thread_name, reference_flag, arg0, arg1, arg2, arg3, caller_filename, caller_class, caller_method, caller_line, le.marker_type,event_id      
+	$query =  "SELECT timestmp,formatted_message,logger_name,level_string,thread_name, reference_flag, arg0, arg1, arg2, arg3, caller_filename, caller_class, caller_method, caller_line, marker_type,event_id      
 			   FROM logging_event";
 
 	$dataset = $result ->connect($query);
@@ -104,7 +104,7 @@ function populatecc()
 function populatemt()
 {
 	$result = new conn();
-	$query = "SELECT DISTINCT le.marker_type
+	$query = "SELECT DISTINCT marker_type
 					FROM  logging_event le";
 	
 	$dataset = $result -> connect($query);
