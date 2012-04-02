@@ -1,8 +1,6 @@
-.project
 .metadata
 bin/**
 *.tmp
-.classpath
 .settings/
 .loadpath
 .project
