@@ -90,7 +90,8 @@ else
 					</th>
 					<th><b><a href="index2.php?sortvalue=caller_line">Caller Line </a>
 
-							</th>  <th><b><a href="index2.php?sortvalue=marker_type")>Marker type </a>  
+					</th>  
+					<th><b><a href="index2.php?sortvalue=marker_type")>Marker type </a>  
 					
 					</th>
 					<th><b><a href="index2.php?sortvalue=mapped_key"> Mapped Key</a>

@@ -1,14 +1,7 @@
-*.pydevproject
 .project
 .metadata
 bin/**
-tmp/**
-tmp/**/*
 *.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
 .classpath
 .settings/
 .loadpath
@@ -27,5 +20,3 @@ local.properties
 # PDT-specific
 .buildpath
 
-# Maven target folder
-target/
