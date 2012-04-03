@@ -24,9 +24,10 @@ th {
 
 
 <script language="javascript" type="text/javascript"
-	src="datetimepicker.js"></script>
+	src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 
 <script>
 	$(function() {

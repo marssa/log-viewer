@@ -22,7 +22,7 @@ if (isset($_POST['button'])) {
 	$from = $_POST['txtfrom'];
 	$_SESSION['from'] = $from;
 	//$class =
-	$_SESSION['class'] =$_POST['txtcallerclass'];
+	$_SESSION['txtcallerclass'] =$_POST['txtcallerclass'];
 	$markertype = $_POST['txtmarkertype'];
 	$_SESSION['markertype'] = $markertype;
 	$levelstring = $_POST['txtlevelstring'];
@@ -113,12 +113,12 @@ if (isset($_POST['button'])) {
 
 					?>
 						<div>
-							<select name="txtcallerclass">                     	
+							<?php $select_name = 'txtcallerclass'; ?>
+							<select name="<?= $select_name ?>">                     	
 							<?php if($_POST['submit'] == true){?>
-								<option value="<?php echo $_POST['txtcallerclass']; ?>"
-									selected="selected">				
+								<option value="<?= $_POST['txtcallerclass']; ?>">				
 
-									<?php echo $_POST['txtcallerclass']; ?></option>
+									<?= $_POST['txtcallerclass']; ?></option>
 
 									<?php } else { ?>
 								<option>Select</option>
@@ -127,18 +127,14 @@ if (isset($_POST['button'])) {
 							<?php while ($row=mysql_fetch_row ($allcallerclasses))
 							{
 								$Name = $row[0];
-								print ("<option value='$Name'> $Name</option>\n");
+								$selected = ((isset($_SESSION[$select_name]) && $_SESSION[$select_name] == $Name) ? ' selected="yes"' : '');
+								print ("<option value='$Name'$selected> $Name</option>");
 								
-								$caller = $Name;
-								echo $txtcallerclass;
+// 								$caller = $Name;
+// 								echo $txtcallerclass;
 							}
 							?>
 							</select>
-							<script type="text/javascript">
-							<?php if (isset($class)){ ?> 
-							document.getElementById('<?php echo $class ?>').value == ( <?php echo $class ?>)
-							<?php } ?>
-							</script>
 						</div> </br>
 					</td>
 				</tr>
