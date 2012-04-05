@@ -1,7 +1,5 @@
-<?php include ("includes/conn.php");?>
+<?php include_once ("includes/conn.php");?>
 <?php 
-
-//get all data from
 function GetValuesAll()
 {
 	$result = new conn();

@@ -1,7 +1,8 @@
 <?php session_start();?>
 <?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
-<?php include ("includes/dataclass.php");?>
-<?php include ("includes/data.php");?>
+<?php include_once ("includes/data.php");?>
+<?php include_once ("includes/Business.php");?>
+
 
 <?php
 if ( isset($_GET['sortvalue']) )
@@ -21,14 +22,16 @@ if (isset($_POST['button'])) {
 	$_SESSION['to'] = $to;
 	$from = $_POST['txtfrom'];
 	$_SESSION['from'] = $from;
-	//$class =
+	
 	$_SESSION['txtcallerclass'] =$_POST['txtcallerclass'];
-	$markertype = $_POST['txtmarkertype'];
-	$_SESSION['markertype'] = $markertype;
-	$levelstring = $_POST['txtlevelstring'];
-	$_SESSION['levelstring'] = $levelstring;
-	$loggername = $_POST['txloggername'];
-	$_SESSION['loggername'] = $loggername;
+	 
+	$_SESSION['txtmarkertype'] = $_POST['txtmarkertype'];
+	
+	
+	$_SESSION['txtlevelstring'] = $_POST['txtlevelstring'];
+	
+	
+	$_SESSION['txloggername'] = $_POST['txloggername'];
 }
 
 ?>
@@ -43,11 +46,7 @@ if (isset($_POST['button'])) {
 <body>
 	<div id="lee">
 		<form action="Search.php" method="post" name="Search" id="Search">
-			
-			
-			
-			
-
+		
 		<?php echo "</br></br><b><center>Logging Event Information</center></b><br><br>"; ?>
 
 			<table>
@@ -57,8 +56,7 @@ if (isset($_POST['button'])) {
 					</td>
 					<td></td>
 				</tr>
-				<tr>
-					
+				<tr>				
 					
 					
 				<?php echo "optionr = ".$_SESSION['optionr'];?><br>					
@@ -95,7 +93,7 @@ if (isset($_POST['button'])) {
 				<tr>
 					<td><label for="txtfrom">From</label>
 					</td>
-					<td><input type="text" id="txtfrom" name="txtfrom"
+					<td><input type="text" id="txtfrom" name="txtfrom"	
 					<?= (isset($from) )? 'txtfrom' : '$from' ?> /> <label for="txtto">To</label>
 						<input type="text" id="txtto" name="txtto" /> </br>
 					</td>
@@ -108,8 +106,11 @@ if (isset($_POST['button'])) {
 					</td>
 					<!--<td><input type="text" id="txtcallerclass" name="txtcallerclass" /> -->
 					<td>
-					<?php
-					$allcallerclasses = populatecc();
+					<?php					
+					
+					//$allcallerclasses = $object->populatecallerc();
+				 
+					$allcallerclasses = populatecallerclogic();
 
 					?>
 						<div>
@@ -124,7 +125,7 @@ if (isset($_POST['button'])) {
 								<option>Select</option>
 								<?php } ?>
 																
-							<?php while ($row=mysql_fetch_row ($allcallerclasses))
+							<?php while ($row=getfetchrow ($allcallerclasses))
 							{
 								$Name = $row[0];
 								$selected = ((isset($_SESSION[$select_name]) && $_SESSION[$select_name] == $Name) ? ' selected="yes"' : '');
@@ -141,12 +142,12 @@ if (isset($_POST['button'])) {
 				<tr>
 					<td><label>Marker Type</label></td>
 					<td>
-					<?php $allmarkertypes = populatemt();?>
+					<?php $allmarkertypes = populatemarkertype();?>
 						<div>
 							<select name="txtmarkertype">	    
 							<?php
 							print ("<option>Select</option>");
-							while ($row=mysql_fetch_row($allmarkertypes))
+							while ($row=getfetchrow($allmarkertypes))
 							{
 								$Name = $row[0];
 								print ("<option value='$Name'>$Name</option>\n");
@@ -163,12 +164,12 @@ if (isset($_POST['button'])) {
 				<tr>
 					<td><label>Level String</label></td>
 					<td>
-					<?php $alllevelstrings = populatelevel();?>
+					<?php $alllevelstrings = populatelevelstrings();?>
 						<div>
 							<select name="txtlevelstring">	    
 							<?php
 							print ("<option>Select</option>");
-							while ($row=mysql_fetch_row($alllevelstrings))
+							while ($row=getfetchrow($alllevelstrings))
 							{
 								$Name = $row[0];
 								print ("<option value='$Name'>$Name</option>\n");
@@ -181,12 +182,12 @@ if (isset($_POST['button'])) {
 				<tr>
 					<td><label>Logger Name</label></td>
 					<td>
-					<?php $allloggernames = populateloggername();?>
+					<?php $allloggernames = populateloggernames();?>
 						<div>
 							<select name="txloggername">	    
 							<?php
 							print ("<option>Select</option>");
-							while ($row=mysql_fetch_row($allloggernames))
+							while ($row=getfetchrow($allloggernames))
 							{
 
 								$Name = $row[0];
@@ -293,47 +294,47 @@ if (isset($_POST['button'])) {
 						if(( $_POST["optionr"] == "t3") || ( $_POST["optionr"] == null))
 						{
 							
-							$result = GetValuesAll();
+							$result = getallvalues();
 						}
 						else if( $_POST["optionr"] == "t2")
 						{	
 							
-							$result =GetValuesAllfrom2tables();
+							$result =getvaluesfrom2t();
 						}
 						else if( $_POST["optionr"] == "t1")
 						{
 							
-							$result =GetValuesAllfrom1table();
+							$result =getvaluesfrom1t();
 						}
 					}
 				}
 				else if($to == null && $class == 'Select')
 				{
-					$result = GetValuesAll();
+					$result = getallvalues();
 						
 				}
 				else if($from == null && $class == 'Select')
 				{
-					$result = GetValuesAll();
+					$result = getallvalues();
 						
 				}
 				
 				else if($to == null && $from == NULL && $class != 'Select')
 				{
 					
-					$result = GetValuesCallerClass($class);
+					$result = getvaluescc($class);
 				}
 				
 				else if($class == 'Select' && $to != null && $from != NULL)
 				{
-					$result = GetValuesTimestmpRange($from ,$to);
+					$result = getvaluesusingtimestamp($from ,$to);
 				}
 				
 				
 				if(! isset($result)){
-					$result = GetValuesAll();
+					$result = getallvalues();
 				}
-				$num=mysql_num_rows($result);
+				$num=getrowresult($result);
 				
 				//$result = GetValuesTimestmpRange($_POST["from"],$_POST["to"]);
 				while ($i < $num) {
