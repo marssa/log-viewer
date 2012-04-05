@@ -18,10 +18,10 @@ if (isset($_POST['button'])) {
 
 	$optionr = $_POST['optionr'];
 
-	$to = $_POST['txtto'];
-	$_SESSION['to'] = $to;
-	$from = $_POST['txtfrom'];
-	$_SESSION['from'] = $from;
+	
+	$_SESSION['to'] =$_POST['txtto'];
+	
+	$_SESSION['from'] =$_POST['txtfrom'];
 	
 	$_SESSION['txtcallerclass'] =$_POST['txtcallerclass'];
 	 
@@ -60,13 +60,13 @@ if (isset($_POST['button'])) {
 					
 					
 				<?php echo "optionr = ".$_SESSION['optionr'];?><br>					
-				<?php echo "class = ". $_SESSION['class'];	?><br>
-				<?php echo "markertype = ". $_SESSION['markertype'];?><br>
-				<?php echo "levelstring = ". $_SESSION['levelstring'];?><br>
-				<?php echo "loggername = ". $_SESSION['loggername'];?><br>
-				
-				
+				<?php echo "class = ". $_SESSION['txtcallerclass'];	?><br>
+				<?php echo "markertype = ". $_SESSION['txtmarkertype'];?><br>
+				<?php echo "levelstring = ". $_SESSION['txtlevelstring'];?><br>
+				<?php echo "loggername = ". $_SESSION['txloggername'];?><br>			
 				<?php echo $caller; ?>
+				
+				
 					<td><Input type='Radio' Name="optionr" value="t3"
 					<?= (isset($optionr) && $optionr == "t3")? 'checked' : '' ?> /> All
 						3 tables</Input>
@@ -131,8 +131,6 @@ if (isset($_POST['button'])) {
 								$selected = ((isset($_SESSION[$select_name]) && $_SESSION[$select_name] == $Name) ? ' selected="yes"' : '');
 								print ("<option value='$Name'$selected> $Name</option>");
 								
-// 								$caller = $Name;
-// 								echo $txtcallerclass;
 							}
 							?>
 							</select>
@@ -142,21 +140,31 @@ if (isset($_POST['button'])) {
 				<tr>
 					<td><label>Marker Type</label></td>
 					<td>
-					<?php $allmarkertypes = populatemarkertype();?>
+					<?php 
+					
+					$allmarkertypes = populatemarkertype();?>
 						<div>
-							<select name="txtmarkertype">	    
-							<?php
-							print ("<option>Select</option>");
+						<?php $select_name1 = 'txtmarkertype'; ?>
+							<select name="<?= $select_name1 ?>">	    
+							<?php if($_POST['submit'] == true){ ?>
+								<option value="<?= $_POST['txtmarkertype']; ?>">
+								
+								<?= $_POST['txtmarkertype']; ?></option>
+								
+								<?php } else { ?>
+								<option>Select</option>
+								<?php } 
+							
 							while ($row=getfetchrow($allmarkertypes))
 							{
 								$Name = $row[0];
-								print ("<option value='$Name'>$Name</option>\n");
+								$selected = ((isset($_SESSION[$select_name1]) && $_SESSION[$select_name1] == $Name) ? ' selected="yes"' : '');
+								print ("<option value='$Name'$selected>$Name</option>\n");
 							}
+							
 							?>
 							</select>
-							<script type="text/javascript">
-							 <? if (isset($txtmarkertype)) document.getElementById('$txtmarkertype').value == (print $txtmarkertype); ?>
-							</script>
+							
 						</div> <br />
 					</td>
 				</tr>
@@ -166,14 +174,25 @@ if (isset($_POST['button'])) {
 					<td>
 					<?php $alllevelstrings = populatelevelstrings();?>
 						<div>
-							<select name="txtlevelstring">	    
-							<?php
-							print ("<option>Select</option>");
+							<?php $select_name2 = 'txtlevelstring'; ?>
+							
+							<select name="<?= $select_name2 ?>">	    
+							<?php if($_POST['submit'] == true){ ?>
+								<option value="<?= $_POST['txtlevelstring']; ?>">
+								
+								<?= $_POST['txtlevelstring']; ?></option>
+								
+								<?php } else { ?>
+								<option>Select</option>
+								<?php } 
+							
 							while ($row=getfetchrow($alllevelstrings))
 							{
 								$Name = $row[0];
-								print ("<option value='$Name'>$Name</option>\n");
+								$selected = ((isset($_SESSION[$select_name2]) && $_SESSION[$select_name2] == $Name) ? ' selected="yes"' : '');
+								print ("<option value='$Name'$selected>$Name</option>\n");
 							}
+							
 							?>
 							</select>
 						</div> <br />
@@ -184,15 +203,26 @@ if (isset($_POST['button'])) {
 					<td>
 					<?php $allloggernames = populateloggernames();?>
 						<div>
-							<select name="txloggername">	    
-							<?php
-							print ("<option>Select</option>");
+						
+						<?php $select_name3 = 'txloggername'; ?>
+						
+							<select name="<?= $select_name3 ?>">	    
+							<?php if($_POST['submit'] == true){ ?>
+								<option value="<?= $_POST['txloggername']; ?>">
+								
+								<?= $_POST['txloggername']; ?></option>
+								
+								<?php } else { ?>
+								<option>Select</option>
+								<?php } 
+							
 							while ($row=getfetchrow($allloggernames))
 							{
-
 								$Name = $row[0];
-								print ("<option value='$Name'>$Name</option>\n");
+								$selected = ((isset($_SESSION[$select_name3]) && $_SESSION[$select_name3] == $Name) ? ' selected="yes"' : '');
+								print ("<option value='$Name'$selected>$Name</option>\n");
 							}
+							
 							?>
 							</select>
 						</div> <br />

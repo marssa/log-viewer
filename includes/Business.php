@@ -68,5 +68,7 @@ function getfetchrow($result)
 	return $getfetchrowresult;
 }
 
+
+
 ?>
 
