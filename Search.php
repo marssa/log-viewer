@@ -7,33 +7,33 @@
 <?php
 if ( isset($_GET['sortvalue']) )
 {
-	$_SESSION['sortvalue'] = $_GET['sortvalue'];
+	$_SESSION['sortvalue'] = $sortvalue;
 }
 else
 {
-	$_SESSION['sortvalue']='le.event_id';
+	$_SESSION['sortvalue'] = 'le.event_id';
 }
 
 if (isset($_POST['button'])) {
+	extract($_POST);
+	
+	$_SESSION['optionr'] = $optionr;
 
-	$optionr = $_POST['optionr'];
+	$_SESSION['txtto'] = $txtto;
 
+	$_SESSION['txtfrom'] = $txtfrom;
 	
-	$_SESSION['to'] =$_POST['txtto'];
-	
-	$_SESSION['from'] =$_POST['txtfrom'];
-	
-	$_SESSION['txtcallerclass'] =$_POST['txtcallerclass'];
+	$_SESSION['caller_class'] = $caller_class;
 	 
-	$_SESSION['txtmarkertype'] = $_POST['txtmarkertype'];
+	$_SESSION['marker_type'] = $marker_type;
 	
 	
-	$_SESSION['txtlevelstring'] = $_POST['txtlevelstring'];
+	$_SESSION['level_string'] = $level_string;
 	
 	
-	$_SESSION['txloggername'] = $_POST['txloggername'];
+	$_SESSION['logger_name'] = $logger_name;
 }
-
+extract($_SESSION);
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -58,18 +58,16 @@ if (isset($_POST['button'])) {
 				</tr>
 				<tr>				
 					
-					
-				<?php echo "optionr = ".$_SESSION['optionr'];?><br>					
-				<?php echo "class = ". $_SESSION['txtcallerclass'];	?><br>
-				<?php echo "markertype = ". $_SESSION['txtmarkertype'];?><br>
-				<?php echo "levelstring = ". $_SESSION['txtlevelstring'];?><br>
-				<?php echo "loggername = ". $_SESSION['txloggername'];?><br>			
-				<?php echo $caller; ?>
+							
+				<?php echo "class = ". $caller_class;	?><br>
+				<?php echo "markertype = ". $marker_type;?><br>
+				<?php echo "levelstring = ". $level_string?><br>
+				<?php echo "loggername = ". $logger_name?><br>			
+				<?php //echo $caller; ?>
 				
 				
 					<td><Input type='Radio' Name="optionr" value="t3"
-					<?= (isset($optionr) && $optionr == "t3")? 'checked' : '' ?> /> All
-						3 tables</Input>
+					<?= (isset($optionr) && $optionr == "t3")? 'checked' : '' ?> /> All	3 tables</Input>
 					</td>
 					<td></td>
 
@@ -94,43 +92,40 @@ if (isset($_POST['button'])) {
 					<td><label for="txtfrom">From</label>
 					</td>
 					<td><input type="text" id="txtfrom" name="txtfrom"	
-					<?= (isset($from) )? 'txtfrom' : '$from' ?> /> <label for="txtto">To</label>
-						<input type="text" id="txtto" name="txtto" /> </br>
+					value="<?= (isset($txtfrom) )? $txtfrom : '' ?>"/> <label for="txtto">To</label>
+					<input type="text" id="txtto" name="txtto"
+					value="<?= (isset($txtto) )? $txtto : '' ?>"/> </br>
 					</td>
-
 				</tr>
 
 				<tr>
 
-					<td><label>Caller Class</label>
+				<?php 		
+
+				$searchCriterias = compact("txtto", "txtfrom", "caller_class", "marker_type", "level_string", "logger_name");
+				
+				?>
+					<td>
+						<label>Caller Class</label>
 					</td>
-					<!--<td><input type="text" id="txtcallerclass" name="txtcallerclass" /> -->
 					<td>
 					<?php					
 					
 					//$allcallerclasses = $object->populatecallerc();
-				 
+
 					$allcallerclasses = populatecallerclogic();
 
 					?>
 						<div>
-							<?php $select_name = 'txtcallerclass'; ?>
-							<select name="<?= $select_name ?>">                     	
-							<?php if($_POST['submit'] == true){?>
-								<option value="<?= $_POST['txtcallerclass']; ?>">				
-
-									<?= $_POST['txtcallerclass']; ?></option>
-
-									<?php } else { ?>
-								<option>Select</option>
-								<?php } ?>
+							<select name="caller_class">
+							
+								<option value=''>Select</option>
 																
 							<?php while ($row=getfetchrow ($allcallerclasses))
 							{
 								$Name = $row[0];
-								$selected = ((isset($_SESSION[$select_name]) && $_SESSION[$select_name] == $Name) ? ' selected="yes"' : '');
+								$selected = ((isset($caller_class) && $caller_class == $Name) ? ' selected="yes"' : '');
 								print ("<option value='$Name'$selected> $Name</option>");
-								
 							}
 							?>
 							</select>
@@ -140,31 +135,21 @@ if (isset($_POST['button'])) {
 				<tr>
 					<td><label>Marker Type</label></td>
 					<td>
-					<?php 
-					
-					$allmarkertypes = populatemarkertype();?>
+					<?php $allmarkertypes = populatemarkertype();?>
 						<div>
-						<?php $select_name1 = 'txtmarkertype'; ?>
-							<select name="<?= $select_name1 ?>">	    
-							<?php if($_POST['submit'] == true){ ?>
-								<option value="<?= $_POST['txtmarkertype']; ?>">
-								
-								<?= $_POST['txtmarkertype']; ?></option>
-								
-								<?php } else { ?>
-								<option>Select</option>
-								<?php } 
+							<select name="marker_type">	    
+								<option value=''>Select</option>
+							<?php 
 							
 							while ($row=getfetchrow($allmarkertypes))
 							{
 								$Name = $row[0];
-								$selected = ((isset($_SESSION[$select_name1]) && $_SESSION[$select_name1] == $Name) ? ' selected="yes"' : '');
+								$selected = ((isset($marker_type) && $marker_type == $Name) ? ' selected="yes"' : '');
 								print ("<option value='$Name'$selected>$Name</option>\n");
 							}
 							
 							?>
-							</select>
-							
+							</select>							
 						</div> <br />
 					</td>
 				</tr>
@@ -174,22 +159,13 @@ if (isset($_POST['button'])) {
 					<td>
 					<?php $alllevelstrings = populatelevelstrings();?>
 						<div>
-							<?php $select_name2 = 'txtlevelstring'; ?>
-							
-							<select name="<?= $select_name2 ?>">	    
-							<?php if($_POST['submit'] == true){ ?>
-								<option value="<?= $_POST['txtlevelstring']; ?>">
-								
-								<?= $_POST['txtlevelstring']; ?></option>
-								
-								<?php } else { ?>
-								<option>Select</option>
-								<?php } 
-							
+							<select name="level_string">	    
+							<option value=''>Select</option>
+							<?php 							
 							while ($row=getfetchrow($alllevelstrings))
 							{
 								$Name = $row[0];
-								$selected = ((isset($_SESSION[$select_name2]) && $_SESSION[$select_name2] == $Name) ? ' selected="yes"' : '');
+								$selected = ((isset($level_string) && $level_string == $Name) ? ' selected="yes"' : '');
 								print ("<option value='$Name'$selected>$Name</option>\n");
 							}
 							
@@ -203,23 +179,14 @@ if (isset($_POST['button'])) {
 					<td>
 					<?php $allloggernames = populateloggernames();?>
 						<div>
-						
-						<?php $select_name3 = 'txloggername'; ?>
-						
-							<select name="<?= $select_name3 ?>">	    
-							<?php if($_POST['submit'] == true){ ?>
-								<option value="<?= $_POST['txloggername']; ?>">
-								
-								<?= $_POST['txloggername']; ?></option>
-								
-								<?php } else { ?>
-								<option>Select</option>
-								<?php } 
+							<select name="logger_name">	    
+							<option value=''>Select</option>
+							<?php
 							
 							while ($row=getfetchrow($allloggernames))
 							{
 								$Name = $row[0];
-								$selected = ((isset($_SESSION[$select_name3]) && $_SESSION[$select_name3] == $Name) ? ' selected="yes"' : '');
+								$selected = ((isset($logger_name) && $logger_name == $Name) ? ' selected="yes"' : '');
 								print ("<option value='$Name'$selected>$Name</option>\n");
 							}
 							
@@ -311,65 +278,32 @@ if (isset($_POST['button'])) {
 								
 				<!-- <input name="btnsearch" type="button" value="Go" >-->
 	
-				<?php		
-				
-			 if ($_POST)
-			{
-				
-				
- 								
-				if($to == null && $from == NULL && $class == "Select")
-				{
-					if (isset($_POST["optionr"])){
-						if(( $_POST["optionr"] == "t3") || ( $_POST["optionr"] == null))
-						{
-							
-							$result = getallvalues();
-						}
-						else if( $_POST["optionr"] == "t2")
-						{	
-							
-							$result =getvaluesfrom2t();
-						}
-						else if( $_POST["optionr"] == "t1")
-						{
-							
-							$result =getvaluesfrom1t();
-						}
+				<?php
+
+				if (isset($_POST["optionr"])){
+					if((  $_POST["optionr"] == "t3") || ( $_POST["optionr"] == null))
+					{						
+						$result =  getall($searchCriterias, "t3");
 					}
-				}
-				else if($to == null && $class == 'Select')
-				{
-					$result = getallvalues();
+					else if( $_POST["optionr"] == "t2")
+					{
+						$result =getall($searchCriterias, "t2");
+					}
+					else if( $_POST["optionr"] == "t1")
+					{
 						
-				}
-				else if($from == null && $class == 'Select')
-				{
-					$result = getallvalues();
-						
-				}
-				
-				else if($to == null && $from == NULL && $class != 'Select')
-				{
-					
-					$result = getvaluescc($class);
-				}
-				
-				else if($class == 'Select' && $to != null && $from != NULL)
-				{
-					$result = getvaluesusingtimestamp($from ,$to);
-				}
-				
+					$result =getall($searchCriterias, "t1");
+					}
+				}				
 				
 				if(! isset($result)){
-					$result = getallvalues();
+					//TODO add parameter optionr
+					$result = getall($searchCriterias);
 				}
 				$num=getrowresult($result);
 				
-				//$result = GetValuesTimestmpRange($_POST["from"],$_POST["to"]);
+				//$result = GetValuesTimestmpRange($_POST["txtfrom"],$_POST["txtto"]);
 				while ($i < $num) {
-			
-				
 					
 					while($row = mysql_fetch_array($result,MYSQL_ASSOC))
 					{
@@ -439,7 +373,6 @@ if (isset($_POST['button'])) {
 			</table>
 			<?php 		
 				$i++;}
-	}
 	?>
 </form>
 	</div>

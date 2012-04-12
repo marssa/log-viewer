@@ -115,7 +115,7 @@ else
 				}
 			
 			//code for the first table - loggingeventException
-			$resultlee = GetValuesAll();
+			$resultlee =  getall();
 // 			echo $_SESSION['sortvalue'];
 			//code for the second table - LoggingEvent
 			$resultle = GetValuesLoggingEvent();

@@ -3,3 +3,12 @@ $(document).ready(function() {
 //		$.toggle()
 //	});
 });
+
+
+//script.js 
+//**from clayton email**
+
+$("#free-text").autocomplete({
+    source : "controllers/products.php",
+    minLength : 2
+});
