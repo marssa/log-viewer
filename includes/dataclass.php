@@ -5,9 +5,14 @@ function GetValuesLoggingEvent()
 {
 
 	$result = new conn();
-	$query =  "SELECT timestmp,formatted_message,logger_name,level_string,thread_name, reference_flag, arg0, arg1, arg2, arg3, caller_filename, caller_class, caller_method, caller_line, marker_type,event_id
-			   FROM logging_event";
-
+	$query =  "SELECT lee.i, lee.trace_line,
+			   le.timestmp,le.formatted_message, le.logger_name, le.level_string, le.thread_name, le.reference_flag, le.arg0, le.arg1, le.arg2, le.arg3, le.caller_filename, le.caller_class, le.caller_method, le.caller_line,le.marker_type, le.event_id,
+			   lep.event_id, lep.mapped_key, lep.mapped_value 
+			   from  logging_event le 
+			   JOIN logging_event_exception lee on le.event_id = lee.event_id
+ 			   JOIN logging_event_property lep on le.event_id = lep.event_id
+ 			   ORDER BY " .$_SESSION['sortvalue'] ." ASC" ;
+					
 	$dataset = $result ->connect($query);
 	return $dataset;
 }
@@ -25,7 +30,6 @@ function GetValuesTimestmpRange($from, $to)
 			   from  logging_event le 
 			   JOIN logging_event_exception lee on le.event_id = lee.event_id
  			   JOIN logging_event_property lep on le.event_id = lep.event_id
- 			   
  			   WHERE le.timestmp BETWEEN '".$timestampfrom."' AND '".$timestampto."'";
 	// 				ORDER BY " .$_SESSION['sortvalue'] ." ASC ";
 
@@ -33,23 +37,6 @@ function GetValuesTimestmpRange($from, $to)
 	return $dataset;
 }
 
-function GetValuesCallerClass($callerclass)
-{
-	$result = new conn();
-	$query = "SELECT lee.i, lee.trace_line,
-				   le.timestmp,le.formatted_message, le.logger_name, le.level_string, le.thread_name, le.reference_flag, le.arg0, le.arg1, le.arg2, le.arg3, le.caller_filename, le.caller_class, le.caller_method, le.caller_line,le.marker_type, le.event_id,
-				   lep.event_id, lep.mapped_key, lep.mapped_value 
-				   from  logging_event le 
-				   JOIN logging_event_exception lee on le.event_id = lee.event_id
-	 			   JOIN logging_event_property lep on le.event_id = lep.event_id
-	 			  
-	 			   WHERE le.caller_class = '".$callerclass."'
-					 ORDER BY " .$_SESSION['sortvalue'] ." ASC ";
-
-	$dataset = $result ->connect($query);
-
-	return $dataset;
-}
 
 function populatecc()
 {
@@ -91,7 +78,7 @@ function populateloggername()
 	return $dataset;
 }
 
-function getall($searchCriterias, $optionr) {
+function getall($searchCriterias = array(), $optionr = "t3") {
 	$result = new conn();
 
 	$query3 =  "SELECT lee.i, lee.trace_line,
@@ -116,6 +103,10 @@ function getall($searchCriterias, $optionr) {
 	if(count($searchCriterias) > 0) {
 		$to;
 		$from;
+		$te = true;
+		$fe = true;
+		
+		//print_r($searchCriterias);
 		//TODO FIX THIS
 		DateTime::createFromFormat("DD/MM/YYYY");
 
@@ -123,16 +114,19 @@ function getall($searchCriterias, $optionr) {
 
 			if($key == "txtto") {
 				$to = $value;
+				$te = false;
 			} else if($key == "txtfrom") {
 				$from = $value;
+				$fe = false;
 			} else if(($key != "txtto") && ($key != "txtfrom")) {
 				if(isset($value) && ($value != "") && ($value != "Select")) {
 
 					$validCriterias[$key] = $value;
+					
 				}
 			}
 		}
-
+		//print_r($validCriterias);
 		$arraySize = count($validCriterias);
 		if($arraySize > 0) {
 			$counter = 1;
@@ -154,12 +148,12 @@ function getall($searchCriterias, $optionr) {
 				}
 				$counter++;
 			}
-			if(isset($to) && isset($from)) {
+			if(($te != false) && ($fe != false)) {
 				$thisQuery .=  " AND timestmp BETWEEN '". $to . "' AND '" .$from. "'";
 			}
 		}
 
-		echo "query3 = ".$thisQuery;
+		//echo "query3 = ".$thisQuery;
 		$dataset = $result ->connect($thisQuery);
 		return $dataset;
 	}

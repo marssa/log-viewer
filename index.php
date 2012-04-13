@@ -43,67 +43,67 @@ else
 			
 			<table align="center" width='500' height='100'>
 				<tr>
-					<th><b><a href="index2.php?sortvalue=event_id")>Event_id </a> <!-- </th> -->
-							<!-- <th><b><a href="index2.php?sortvalue=i")>I </a> --> <!--	</th> -->
-							<!-- <th><b><a href="index2.php?sortvalue=trace_line")>Trace_line </a> -->
+					<th><b><a href="index.php?sortvalue=event_id")>Event_id </a> <!-- </th> -->
+							<!-- <th><b><a href="index.php?sortvalue=i")>I </a> --> <!--	</th> -->
+							<!-- <th><b><a href="index.php?sortvalue=trace_line")>Trace_line </a> -->
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=timestmp">TimeStamp </a>
+					<th><b><a href="index.php?sortvalue=timestmp">TimeStamp </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=formatted_message">FormattedMessage</a>
+					<th><b><a href="index.php?sortvalue=formatted_message">FormattedMessage</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=logger_name">Logger Name</a>
+					<th><b><a href="index.php?sortvalue=logger_name">Logger Name</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=level_string">Level String </a>
+					<th><b><a href="index.php?sortvalue=level_string">Level String </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=thread_name">Thread Name</a>
+					<th><b><a href="index.php?sortvalue=thread_name">Thread Name</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=reference_flag">Reference Flag</a>
+					<th><b><a href="index.php?sortvalue=reference_flag">Reference Flag</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=arg0">Argument 0 </a>
+					<th><b><a href="index.php?sortvalue=arg0">Argument 0 </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=arg1">Argument 1 </a>
+					<th><b><a href="index.php?sortvalue=arg1">Argument 1 </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=arg2">Argument 2</a>
+					<th><b><a href="index.php?sortvalue=arg2">Argument 2</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=arg3">Argument 3</a>
+					<th><b><a href="index.php?sortvalue=arg3">Argument 3</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=caller_filename">Caller
+					<th><b><a href="index.php?sortvalue=caller_filename">Caller
 								FileName </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=caller_class">Caller Class </a>
+					<th><b><a href="index.php?sortvalue=caller_class">Caller Class </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=caller_method">Caller Method </a>
+					<th><b><a href="index.php?sortvalue=caller_method">Caller Method </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=caller_line">Caller Line </a>
+					<th><b><a href="index.php?sortvalue=caller_line">Caller Line </a>
 
 					</th>  
-					<th><b><a href="index2.php?sortvalue=marker_type")>Marker type </a>  
+					<th><b><a href="index.php?sortvalue=marker_type")>Marker type </a>  
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=mapped_key"> Mapped Key</a>
+					<th><b><a href="index.php?sortvalue=mapped_key"> Mapped Key</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=mapped_value">Mapped Value </a>
+					<th><b><a href="index.php?sortvalue=mapped_value">Mapped Value </a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=i"> I</a>
+					<th><b><a href="index.php?sortvalue=i"> I</a>
 					
 					</th>
-					<th><b><a href="index2.php?sortvalue=trace_line">Trace Line </a>
+					<th><b><a href="index.php?sortvalue=trace_line">Trace Line </a>
 					
 					</th>
 				</tr>
@@ -114,17 +114,12 @@ else
 					$_SESSION['sortvalue'] = 'le.event_id';
 				}
 			
-			//code for the first table - loggingeventException
-			$resultlee =  getall();
-// 			echo $_SESSION['sortvalue'];
-			//code for the second table - LoggingEvent
-			$resultle = GetValuesLoggingEvent();
+			
+			$resultlee = GetValuesLoggingEvent();
+			
 			
 			$numlee=mysql_num_rows($resultlee);
 						
-			
-			//mysql_close();
-			
 			
 	while ($i < $numlee) {
 		

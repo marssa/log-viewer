@@ -40,8 +40,8 @@ extract($_SESSION);
 
 <head>
 <title>Home</title>
-<link type="text/css" href="css/redmond/jquery-ui-1.8.17.custom.css"
-	rel="stylesheet" />
+<link type="text/css" href="css/redmond/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+
 </head>
 <body>
 	<div id="lee">
@@ -59,10 +59,10 @@ extract($_SESSION);
 				<tr>				
 					
 							
-				<?php echo "class = ". $caller_class;	?><br>
-				<?php echo "markertype = ". $marker_type;?><br>
-				<?php echo "levelstring = ". $level_string?><br>
-				<?php echo "loggername = ". $logger_name?><br>			
+				<?php// echo "class = ". $caller_class;	?><br>
+				<?php// echo "markertype = ". $marker_type;?><br>
+				<?php// echo "levelstring = ". $level_string?><br>
+				<?php// echo "loggername = ". $logger_name?><br>			
 				<?php //echo $caller; ?>
 				
 				
@@ -70,7 +70,6 @@ extract($_SESSION);
 					<?= (isset($optionr) && $optionr == "t3")? 'checked' : '' ?> /> All	3 tables</Input>
 					</td>
 					<td></td>
-
 				</tr>
 
 				<tr>
@@ -78,7 +77,6 @@ extract($_SESSION);
 					<?= (isset($optionr) && $optionr == "t2")? 'checked' : '' ?> />
 						Event and it's property</Input></td>
 					<td></td>
-
 				</tr>
 
 				<tr>
@@ -89,17 +87,15 @@ extract($_SESSION);
 
 				</tr>
 				<tr>
-					<td><label for="txtfrom">From</label>
-					</td>
-					<td><input type="text" id="txtfrom" name="txtfrom"	
-					value="<?= (isset($txtfrom) )? $txtfrom : '' ?>"/> <label for="txtto">To</label>
+					<td><label for="txtfrom">From</label></td>
+					<td><input type="text" id="txtfrom" name="txtfrom"value="<?= (isset($txtfrom) )? $txtfrom : '' ?>"/> 
+					<label for="txtto">To</label>
 					<input type="text" id="txtto" name="txtto"
 					value="<?= (isset($txtto) )? $txtto : '' ?>"/> </br>
 					</td>
 				</tr>
 
 				<tr>
-
 				<?php 		
 
 				$searchCriterias = compact("txtto", "txtfrom", "caller_class", "marker_type", "level_string", "logger_name");
