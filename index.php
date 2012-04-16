@@ -1,6 +1,6 @@
 <?php session_start();?>
-<?php include ("includes/dataclass.php");?>
-<?php include ("includes/data.php");?>
+<?php include ("css/dataclass.php");?>
+<?php include ("includes/style.css");?>
 
 <?php
 if ( isset($_GET['sortvalue']) )

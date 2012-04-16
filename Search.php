@@ -1,6 +1,6 @@
 <?php session_start();?>
 <?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
-<?php include_once ("includes/data.php");?>
+<?php include_once ("css/style.css");?>
 <?php include_once ("includes/Business.php");?>
 
 
