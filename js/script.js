@@ -2,7 +2,7 @@ $(function() {
 	
 	$('#txtfrom').datetimepicker({
 	    onClose: function(dateText, inst) {
-	        var endDateTextBox = $('#txtto');
+	        var endDateTextBox = $('#txtto');	        
 	        if (endDateTextBox.val() != '') {
 	            var testStartDate = new Date(dateText);
 	            var testEndDate = new Date(endDateTextBox.val());
@@ -35,6 +35,20 @@ $(function() {
 	        var end = $(this).datetimepicker('getDate');
 	        $('#txtfrom').datetimepicker('option', 'maxDate', new Date(end.getTime()) );
 	    }
-	});
+	});	
+
+	
+//	var dates = $( "#txtfrom, #txtto" ).datepicker({
+//		defaultDate: "",
+//		changeMonth: true,
+//		numberOfMonths: 1,
+//		onSelect: function( selectedDate ) {
+//			var option = this.id == "txtfrom" ? "minDate" : "maxDate",
+//				instance = $( this ).data( "datepicker" ),
+//				date = $.datepicker.parseDate(
+//					instance.settings.dateFormat ||	$.datepicker._defaults.dateFormat,selectedDate, instance.settings );
+//			dates.not( this ).datepicker( "option", option, date );
+//		}
+//	});
 });
 

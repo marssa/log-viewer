@@ -1,6 +1,5 @@
 <?php session_start();?>
 <?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
-<?php include_once ("css/style.css");?>
 <?php include_once ("includes/Business.php");?>
 
 
@@ -40,8 +39,13 @@ extract($_SESSION);
 
 <head>
 <title>Home</title>
-<link type="text/css" href="css/redmond/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
-
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<link rel="stylesheet" href="css/redmond/jquery-ui-1.8.18.custom.css"></link>
+<link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css"></link>
+<link rel="stylesheet" href="css/style.css"></link>
 </head>
 <body>
 	<div id="lee">
@@ -87,11 +91,13 @@ extract($_SESSION);
 
 				</tr>
 				<tr>
-					<td><label for="txtfrom">From</label></td>
-					<td><input type="text" id="txtfrom" name="txtfrom"value="<?= (isset($txtfrom) )? $txtfrom : '' ?>"/> 
+					<td>
+					<label for="txtfrom">From</label>
+					</td>
+					<td>
+					<input type="text" id="txtfrom" name="txtfrom" value="<?= (isset($txtfrom) )? $txtfrom : '' ?>"/> 
 					<label for="txtto">To</label>
-					<input type="text" id="txtto" name="txtto"
-					value="<?= (isset($txtto) )? $txtto : '' ?>"/> </br>
+					<input type="text" id="txtto" name="txtto" value="<?= (isset($txtto) )? $txtto : '' ?>"/> </br>
 					</td>
 				</tr>
 
@@ -208,10 +214,7 @@ extract($_SESSION);
 		?>
 			<table align="center"  height='100' >
 				<tr>
-					<th width = 200px ><b>Event_id </a> <!-- </th> -->
-							<!-- <th><b><a href="search.php?sortvalue=i")>I </a> --> <!--	</th> -->
-							<!-- <th><b><a href="search.php?sortvalue=trace_line")>Trace_line </a> -->
-					
+					<th width = 200px ><b>Event_id </a> 
 					</th>
 					<th width = 200px><b>TimeStamp </a>
 					
