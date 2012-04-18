@@ -60,16 +60,7 @@ extract($_SESSION);
 					</td>
 					<td></td>
 				</tr>
-				<tr>				
-					
-							
-				<?php// echo "class = ". $caller_class;	?><br>
-				<?php// echo "markertype = ". $marker_type;?><br>
-				<?php// echo "levelstring = ". $level_string?><br>
-				<?php// echo "loggername = ". $logger_name?><br>			
-				<?php //echo $caller; ?>
-				
-				
+				<tr>			
 					<td><Input type='Radio' Name="optionr" value="t3"
 					<?= (isset($optionr) && $optionr == "t3")? 'checked' : '' ?> /> All	3 tables</Input>
 					</td>
@@ -102,10 +93,8 @@ extract($_SESSION);
 				</tr>
 
 				<tr>
-				<?php 		
-
-				$searchCriterias = compact("txtto", "txtfrom", "caller_class", "marker_type", "level_string", "logger_name");
-				
+				<?php 	
+					$searchCriterias = compact("txtto", "txtfrom", "caller_class", "marker_type", "level_string", "logger_name");				
 				?>
 					<td>
 						<label>Caller Class</label>

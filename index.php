@@ -1,29 +1,32 @@
 <?php session_start();?>
-<?php include_once ("css/style.css");?>
-
-<?php
-if ( isset($_GET['sortvalue']) )
-{
-	$_SESSION['sortvalue'] = $_GET['sortvalue'];
-}
-else
-{
-	$_SESSION['sortvalue']='event_id';
-}
-?>
+<?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
+<?php include_once ("includes/Business.php");?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 <title>Home</title>
 
-
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<link rel="stylesheet" href="css/style.css"></link>
 </head>
 <body>
 
 	<div id="lee">
+
+
+ 	<?php
+	if ( isset($_GET['sortvalue']) )
+	{
+		$_SESSION['sortvalue'] = $_GET['sortvalue'];
+	}
+	else
+	{
+		$_SESSION['sortvalue']= "event_id";
+	}
+	?>
+
 	<?php
 
 	echo "</br></br><b><center>Logging Event Information</center></b><br><br>";
@@ -39,9 +42,7 @@ else
 
 		<table align="center" width='500' height='100'>
 			<tr>
-				<th><b><a href="index.php?sortvalue=event_id")>Event_id </a> <!-- </th> -->
-						<!-- <th><b><a href="index.php?sortvalue=i")>I </a> --> <!--	</th> -->
-						<!-- <th><b><a href="index.php?sortvalue=trace_line")>Trace_line </a> -->
+				<th><b><a href="index.php?sortvalue=event_id")>Event_id </a>
 				
 				</th>
 				<th><b><a href="index.php?sortvalue=timestmp">TimeStamp </a>
@@ -107,18 +108,17 @@ else
 			
 			
 			
-				
 				<?php 
-// 				if($_SESSION['sortvalue']=='event_id')
-// 				{
-// 					$_SESSION['sortvalue'] = 'le.event_id';
-// 				}
+				if($_SESSION['sortvalue']=='event_id')
+				{
+					$_SESSION['sortvalue'] = 'le.event_id';
+				}
 			
 			
 			$result = GetValuesLoggingEvent();
 			
 			
-			//$numlee=mysql_num_rows($resultlee);
+			$numlee=mysql_num_rows($result);
 						
 			
 	while ($i < $numlee) {
@@ -127,8 +127,7 @@ else
 		{
 			?>			
 			<tr>
-				<td><?php echo "{$row['event_id']}"?> </td>
-				
+				<td><?php echo "{$row['event_id']}"?> </td>				
 				<td><?php echo "{$row['timestmp']} <br>";?></td>
 				<td><?php echo "{$row['formatted_message']} <br>"; ?></td>
 				<td><?php echo "{$row['logger_name']} <br>"; ?></td>
@@ -160,10 +159,6 @@ else
 		
 		
 		
-			
-			
-			
-			
 			<?php 		
 	
 		$i++;
