@@ -18,10 +18,6 @@ class Connection
 		$this->connect();
 	}
 
-	private function __destruct() {
-		$this->close();
-		Connection::$instance = null;
-	}
 
 	static function getInstance($username, $password, $database, $hostname) {
 		if(Connection::$instance == null) {

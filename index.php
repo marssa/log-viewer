@@ -1,5 +1,4 @@
 <?php session_start();?>
-<?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
 <?php include_once ("includes/Business.php");?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

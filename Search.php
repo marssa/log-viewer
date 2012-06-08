@@ -1,5 +1,4 @@
 <?php session_start();?>
-<?php error_reporting(E_ALL ^ (E_NOTICE | E_WARNING)); ?>
 <?php include_once ("includes/Business.php");?>
 
 
@@ -130,8 +129,7 @@ extract($_SESSION);
 						<div>
 							<select name="marker_type">	    
 								<option value=''>Select</option>
-							<?php 
-							
+							<?php 							
 							while ($row=getfetchrow($allmarkertypes))
 							{
 								$Name = $row[0];
@@ -162,7 +160,7 @@ extract($_SESSION);
 							
 							?>
 							</select>
-						</div> <br />
+						</div>
 					</td>
 				</tr>
 				<tr>
